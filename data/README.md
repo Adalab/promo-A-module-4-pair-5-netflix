@@ -12,9 +12,9 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 
 **4.2 CRUD MySQL:**
 
-- [ ] 1.  Consultas sobre las películas
-- [ ] 2.  Consultas sobre los actores.
-- [ ] 3.  Consultas sobre los usuarios.
+- [X] 1.  Consultas sobre las películas
+- [X] 2.  Consultas sobre los actores.
+- [X] 3.  Consultas sobre los usuarios.
 - [ ] 4.  Bonus: Agrega más campos a las tablas.
 
 **4.3 Diagramas y relaciones MySQL:**
