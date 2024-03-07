@@ -18,10 +18,13 @@ server.use(express.json());
 
 async function getConnection() {
   const connection = await mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: process.env.MYSQL_PASS, // Cada una pone sus contraseñas - En terminal MYSQL_PASS='' npm run dev
-    database: "neflix",
+    host: process.env.MYSQL_HOST,
+    //"127.0.0.1"
+    user: process.env.MYSQL_USER,
+    // Cada una pone sus contraseñas - En terminal MYSQL_PASS='' npm run dev, 
+    // O en el archivo '.env' añadir contraseña, instalar 'npm i dotenv', y añadir archivo a ignore antes de hacer push. 
+    password: process.env.MYSQL_PASS, 
+    database: process.env.MYSQL_DB,
   });
 
   await connection.connect();
