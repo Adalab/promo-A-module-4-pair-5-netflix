@@ -52,5 +52,7 @@ server.get("/api/movies", async (req, res) => {
 
   conn.close();
 
-  res.json({ info: "listado peliculas", results: results });
+  //res.json({ info: "listado peliculas", results: results });
+
+  res.json({ success: true, info: "listado peliculas", movies: results });
 });
