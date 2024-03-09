@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
 
+require('dotenv').config();
+
 //CREAR VARIABLES
 
 const server = express();
@@ -15,6 +17,8 @@ server.use(cors());
 server.use(express.json());
 
 // CONFIGURACIÓN DE MYSQL
+
+console.log(process.env.MYSQL_USER)
 
 async function getConnection() {
   const connection = await mysql.createConnection({

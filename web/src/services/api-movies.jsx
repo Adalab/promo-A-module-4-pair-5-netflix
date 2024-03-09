@@ -30,7 +30,7 @@ function getMoviesFromApi() {
   //     });
   // };
 
-  return fetch("http://localhost:4000/movies")
+  return fetch("http://localhost:4000/api/movies")
     .then((response) => response.json())
     .then((data) => {
       return data; //retorna los datos que obtiene del servidor
