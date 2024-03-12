@@ -34,19 +34,14 @@
 
 //En el frontend, modificamos api-movies.js para enviar el parámetro de género como parte de la solicitud
 
-function getMoviesFromApi(genre) {
-  console.log("Parámetro recibido:", genre); // Mostramos en consola el género que escribe la usuaria
-  let url = "http://localhost:4000/api/movies"; //creamos url con la dirección
+function getMoviesFromApi() {
+  console.log();
 
-  // Si la usuaria proporciona un género, agregamos el parámetro a la URL
-  if (genre) {
-    url += `?genre=${genre}`;
-  }
-
-  return fetch(url)
+  // Ampliamos la URL del fetch para enviar el parámetro de género
+  return fetch(`http://localhost:4000/api/movies?genre=${allMoviesOptionGenre}`)
     .then((response) => response.json())
     .then((data) => {
-      return data; // Retorna los datos obtenidos del servidor
+      return data; // retornar los datos que se obtiene del servidor
     });
 }
 
