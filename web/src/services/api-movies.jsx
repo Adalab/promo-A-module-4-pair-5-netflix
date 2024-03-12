@@ -34,11 +34,11 @@
 
 //En el frontend, modificamos api-movies.js para enviar el parámetro de género como parte de la solicitud
 
-function getMoviesFromApi() {
+function getMoviesFromApi({ genre }) {
   console.log();
 
   // Ampliamos la URL del fetch para enviar el parámetro de género
-  return fetch(`http://localhost:4000/api/movies?genre=${allMoviesOptionGenre}`)
+  return fetch(`http://localhost:4000/api/movies?genre=${genre}`)
     .then((response) => response.json())
     .then((data) => {
       return data; // retornar los datos que se obtiene del servidor

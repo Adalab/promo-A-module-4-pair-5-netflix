@@ -46,15 +46,20 @@ server.listen(serverPort, () => {
 });
 
 // ENDPOINT para obtener películas o las peliculas filtradas por género
-server.get("/api/movies", async (req, res) => {
+server.get("/api/movies/", async (req, res) => {
   // Obtenemos el valor del parámetro de consulta de género
   const genreFilterParam = req.query.genre;
+  console.log(req.query.genre);
 
   // Conectamos a la base de datos
   const conn = await getConnection();
-
   // Consultamos las películas
+
   let queryGetMovies = `
+SELECT * FROM neflix.movies;
+`;
+
+  /*  let queryGetMovies = `
     SELECT * FROM neflix.movies;
   `;
 
@@ -62,16 +67,19 @@ server.get("/api/movies", async (req, res) => {
     queryGetMovies = `
       SELECT * FROM neflix.movies WHERE genre = ?;
     `;
-  }
+  }*/
 
-  //Hacemos la consulta SQL con el parámetro de género si está presente.
+  //Hacemos la consulta SQL con el parámetro de género si está presente
   //Si este parámetro está presente, significa que la usuaria ha solicitado filtrar las películas por un género
 
-  const [results] = genreFilterParam //Este es el parámetro de filtro de género que se obtiene de req.query.genre
-    ? //Si genreFilterParam es verdadero, se hará la primera expresión del ?
-      //sino, se hará la segunda expresión del :
-      await conn.query(queryGetMovies, [genreFilterParam]) //solo se seleccionarán las películas que coincidan con el género
-    : await conn.query(queryGetMovies); //se seleccionarán todas las películas sin ningún filtro de genero
+  const [results] = await conn.query(queryGetMovies, [genreFilterParam]); //genreFilterParam //Este es el parámetro de filtro de género que se obtiene de req.query.genre
+  //? //Si genreFilterParam es verdadero, se hará la primera expresión del ?
+  //sino, se hará la segunda expresión del :
+  //solo se seleccionarán las películas que coincidan con el género
+  //: await conn.query(queryGetMovies); //se seleccionarán todas las películas sin ningún filtro de genero
+
+  // Cerrar la conexión a la base de datos
+  conn.close();
 
   // Retornamos el resultado en formato JSON
   res.json({
@@ -79,7 +87,4 @@ server.get("/api/movies", async (req, res) => {
     info: "listado películas filtradas",
     movies: results,
   });
-
-  // Cerrar la conexión a la base de datos
-  conn.close();
 });
