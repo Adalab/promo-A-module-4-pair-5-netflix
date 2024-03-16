@@ -24,7 +24,7 @@ async function getConnection() {
     host: process.env.MYSQL_HOST,
 
     user: process.env.MYSQL_USER,
- 
+
     // O en el archivo '.env' añadir contraseña, instalar 'npm i dotenv', y añadir archivo a ignore antes de hacer push.
     password: process.env.MYSQL_PASS,
     database: process.env.MYSQL_DB,
@@ -48,33 +48,38 @@ server.listen(serverPort, () => {
 server.get("/api/movies/", async (req, res) => {
   // Obtenemos el valor del parámetro de consulta de género
   const genreFilterParam = req.query.genre;
+  const optionOrder = req.query.sort;
   console.log(req.query.genre);
 
   // Conectamos a la base de datos
   const conn = await getConnection();
+
   // Consultamos las películas
 
-  let queryGetMovies = `
-SELECT * FROM neflix.movies
-`;
-
-
-
- if (genreFilterParam) {
-  queryGetMovies += `
-    WHERE genre = ?
+  let queryGetMovies = ` 
+  SELECT * FROM neflix.movies
   `;
-}
+  if (genreFilterParam) {
+    queryGetMovies += `
+     WHERE genre = ?
+    `;
+  }
+  if (optionOrder === 'asc') { queryGetMovies += `ORDER BY title ASC` }
+  else (optionORder === `desc`)
+  {
+    queryGetMovies += ` ORDER BY title DESC`
+  }
 
-  const [results] = await conn.query(queryGetMovies, [genreFilterParam]); 
+
+  const [results] = await conn.query(queryGetMovies, [genreFilterParam], [allMoviesOptionSort]);
 
   // Cerrar la conexión a la base de datos
   conn.close();
 
   // Retornamos el resultado en formato JSON
   res.json({
-    success: true,
-    info: "listado películas filtradas",
-    movies: results,
-  });
+  success: true,
+  info: "listado películas filtradas",
+  movies: results,
+});
 });
